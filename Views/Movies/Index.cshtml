@@ -4,10 +4,14 @@
 	ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+@using Microsoft.AspNetCore.Mvc.Localization
+ 
+@inject IViewLocalizer Localizer
+
+<h1>@Localizer["Title"]</h1>
 
 <p>
-	<a asp-action="Create">Create New</a>
+	<a asp-action="Create">@Localizer["LinkCreate"]</a>
 </p>
 <form asp-controller="Movies" asp-action="Index" method="get">
 	<p>
@@ -16,27 +20,27 @@
 			<option value="">All</option>
 		</select>
 
-		Title: <input type="text" asp-for="SearchString" />
-		<input type="submit" value="Filter" />
+		@Localizer["Filter"]: <input type="text" asp-for="SearchString" />
+		<input type="submit" value="@Localizer["ButtonFilter"]" />
 	</p>
 </form>
 <table class="table">
 	<thead>
 		<tr>
 			<th>
-				@Html.DisplayNameFor(model => model.Movies[0].Title)
+				@Localizer["Column1"]
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Movies[0].ReleaseDate)
+				@Localizer["Column2"]
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Movies[0].Genre)
+				@Localizer["Column3"]
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Movies[0].Price)
+				@Localizer["Column4"]
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Movies[0].Rating)
+				@Localizer["Column5"]
 			</th>
 			<th></th>
 		</tr>
@@ -61,9 +65,9 @@
 				@Html.DisplayFor(modelItem => item.Rating)
 			</td>
 			<td>
-				<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-				<a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-				<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+				<a asp-action="Edit" asp-route-id="@item.ID">@Localizer["Action1"]</a> |
+				<a asp-action="Details" asp-route-id="@item.ID">@Localizer["Action2"]</a> |
+				<a asp-action="Delete" asp-route-id="@item.ID">@Localizer["Action3"]</a>
 			</td>
 		</tr>
 		}

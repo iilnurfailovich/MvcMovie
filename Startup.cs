@@ -39,7 +39,6 @@ namespace MvcMovie
 				var supportedCultures = new[]
 				{
 					new CultureInfo("en"),
-					new CultureInfo("de"),
 					new CultureInfo("ru")
 				};
  
@@ -77,21 +76,21 @@ namespace MvcMovie
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
-
+			
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
-
+			
+			var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+			app.UseRequestLocalization(locOptions.Value);
+			
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
-			
- 
-			var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-			app.UseRequestLocalization(locOptions.Value);
+
 
 		}
 	}
