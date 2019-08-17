@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MvcMovie.Models;
 
 namespace MvcMovie
@@ -26,6 +29,27 @@ namespace MvcMovie
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			
+			services.AddLocalization(options => options.ResourcesPath = "Resources");
+			services.AddMvc()
+				.AddDataAnnotationsLocalization()
+				.AddViewLocalization();
+			services.Configure<RequestLocalizationOptions>(options =>
+			{
+				var supportedCultures = new[]
+				{
+					new CultureInfo("en"),
+					new CultureInfo("de"),
+					new CultureInfo("ru")
+				};
+ 
+				options.DefaultRequestCulture = new RequestCulture("ru");
+				options.SupportedCultures = supportedCultures;
+				options.SupportedUICultures = supportedCultures;
+			});
+			
+			
+			
 			services.Configure<CookiePolicyOptions>(options =>
 			{
 				// This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -35,9 +59,6 @@ namespace MvcMovie
 
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-		    services.AddDbContext<MvcMovieContext>(options =>
-		            options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
 
 		    services.AddDbContext<MvcMovieContext>(options =>
 		            options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
@@ -67,6 +88,11 @@ namespace MvcMovie
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
+			
+ 
+			var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+			app.UseRequestLocalization(locOptions.Value);
+
 		}
 	}
 }
