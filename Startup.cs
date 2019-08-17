@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,9 @@ namespace MvcMovie
 			services.AddLocalization(options => options.ResourcesPath = "Resources");
 			services.AddMvc()
 				.AddDataAnnotationsLocalization()
-				.AddViewLocalization();
+				.AddViewLocalization()
+				.AddJsonOptions(options => options.SerializerSettings.Culture = CultureInfo.CurrentCulture);
+			
 			services.Configure<RequestLocalizationOptions>(options =>
 			{
 				var supportedCultures = new[]
@@ -46,8 +49,6 @@ namespace MvcMovie
 				options.SupportedCultures = supportedCultures;
 				options.SupportedUICultures = supportedCultures;
 			});
-			
-			
 			
 			services.Configure<CookiePolicyOptions>(options =>
 			{
@@ -83,14 +84,19 @@ namespace MvcMovie
 			
 			var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
 			app.UseRequestLocalization(locOptions.Value);
-			
+
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
-
+				
+			app.Run(async (context) =>
+			{
+				context.Response.ContentType = "text/html; charset=utf-8";
+				await context.Response.WriteAsync($"Текст: {context.Items["text"]}");
+			});
 
 		}
 	}
