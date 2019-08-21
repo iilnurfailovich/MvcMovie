@@ -1,7 +1,7 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
- 
-@inject IViewLocalizer Localizer
+﻿@using System.Threading
+@using Microsoft.AspNetCore.Mvc.Localization
 
+@inject IViewLocalizer Localizer
 
 <!DOCTYPE html>
 <html>
@@ -24,6 +24,7 @@
 </head>
 <body>
     <header>
+       @* <div>@Thread.CurrentThread.CurrentCulture.DisplayName;</div> *@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-controller="Movies" asp-action="Index">@Localizer["Tab1"]</a>
@@ -38,9 +39,9 @@
                         </li>
                     </ul>
                 </div>
-                <div>
-                    @await Html.PartialAsync("_SelectLanguagePartial")
-                </div>
+                @*<div>
+                        @await Html.PartialAsync("_SelectLanguagePartial")
+                    </div>*@
             </div>
         </nav>
     </header>
