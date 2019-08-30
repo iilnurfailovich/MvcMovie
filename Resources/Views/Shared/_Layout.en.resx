@@ -126,4 +126,13 @@
   <data name="Tab2" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="Tab3" xml:space="preserve">
+    <value>To register</value>
+  </data>
+  <data name="Tab4" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="Tab5" xml:space="preserve">
+    <value>Exit</value>
+  </data>
 </root>

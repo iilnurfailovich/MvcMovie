@@ -1,75 +1,76 @@
 ﻿@model MvcMovie.Models.MovieGenreViewModel
 
 @{
-	ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index";
 }
 
+
 @using Microsoft.AspNetCore.Mvc.Localization
- 
+
 @inject IViewLocalizer Localizer
 
 <h1>@Localizer["Title"]</h1>
 
 <p>
-	<a asp-action="Create">@Localizer["LinkCreate"]</a>
+    <a asp-action="Create">@Localizer["LinkCreate"]</a>
 </p>
 <form asp-controller="Movies" asp-action="Index" method="get">
-	<p>
+    <p>
 
-		<select asp-for="MovieGenre" asp-items="Model.Genres">
-			<option value="">All</option>
-		</select>
+        <select asp-for="MovieGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
 
-		@Localizer["Filter"]: <input type="text" asp-for="SearchString" />
-		<input type="submit" value="@Localizer["ButtonFilter"]" />
-	</p>
+        @Localizer["Filter"]: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="@Localizer["ButtonFilter"]" />
+    </p>
 </form>
 <table class="table">
-	<thead>
-		<tr>
-			<th>
-				@Localizer["Column1"]
-			</th>
-			<th>
-				@Localizer["Column2"]
-			</th>
-			<th>
-				@Localizer["Column3"]
-			</th>
-			<th>
-				@Localizer["Column4"]
-			</th>
-			<th>
-				@Localizer["Column5"]
-			</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model.Movies)
-		{
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.Title)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.ReleaseDate)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Genre)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Price)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Rating)
-			</td>
-			<td>
-				<a asp-action="Edit" asp-route-id="@item.ID">@Localizer["Action1"]</a> |
-				<a asp-action="Details" asp-route-id="@item.ID">@Localizer["Action2"]</a> |
-				<a asp-action="Delete" asp-route-id="@item.ID">@Localizer["Action3"]</a>
-			</td>
-		</tr>
-		}
-	</tbody>
+    <thead>
+        <tr>
+            <th>
+                @Localizer["Column1"]
+            </th>
+            <th>
+                @Localizer["Column2"]
+            </th>
+            <th>
+                @Localizer["Column3"]
+            </th>
+            <th>
+                @Localizer["Column4"]
+            </th>
+            <th>
+                @Localizer["Column5"]
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Movies)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">@Localizer["Action1"]</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">@Localizer["Action2"]</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">@Localizer["Action3"]</a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

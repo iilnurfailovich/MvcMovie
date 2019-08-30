@@ -117,22 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Language" xml:space="preserve">
-    <value>Язык</value>
+  <data name="Regular" xml:space="preserve">
+    <value>Не правильный формат</value>
   </data>
-  <data name="Tab1" xml:space="preserve">
-    <value>Фильмы</value>
-  </data>
-  <data name="Tab2" xml:space="preserve">
-    <value>Домой</value>
-  </data>
-  <data name="Tab3" xml:space="preserve">
-    <value>Зарегистрироваться</value>
-  </data>
-  <data name="Tab4" xml:space="preserve">
-    <value>Авторизация</value>
-  </data>
-  <data name="Tab5" xml:space="preserve">
-    <value>Выход</value>
+  <data name="Required" xml:space="preserve">
+    <value>Обязательное поле</value>
   </data>
 </root>

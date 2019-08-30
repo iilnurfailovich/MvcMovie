@@ -24,7 +24,6 @@
 </head>
 <body>
     <header>
-       @* <div>@Thread.CurrentThread.CurrentCulture.DisplayName;</div> *@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-controller="Movies" asp-action="Index">@Localizer["Tab1"]</a>
@@ -39,9 +38,24 @@
                         </li>
                     </ul>
                 </div>
-                @*<div>
-                        @await Html.PartialAsync("_SelectLanguagePartial")
-                    </div>*@
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" style="display:flex" asp-area="" asp-controller="Account" asp-action="Login">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <p>@User.Identity.Name</p>
+
+                                <form style="padding-left: 10px" method="post" asp-controller="Account" asp-action="LogOff">
+                                    <input type="submit" value=@Localizer["Tab5"] />
+                                </form>
+                            }
+                            else
+                            {
+                                @Localizer["Tab4"]
+                            }
+                        </a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>

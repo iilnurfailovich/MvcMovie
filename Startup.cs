@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MvcMovie.Models;
 using System.Threading;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MvcMovie
 {
@@ -33,6 +34,16 @@ namespace MvcMovie
         {
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+            string connection = "Server=(localdb)\\mssqllocaldb;Database=MvcMovieContext-b644278d-174f-4ffb-955c-5ca28e68cf64;Trusted_Connection=True;";
+            services.AddDbContext<MvcMovieContext>(options => options.UseSqlServer(connection));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/Account/Login");
+                    options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
+
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
@@ -46,13 +57,6 @@ namespace MvcMovie
                     new CultureInfo("ru-RU"),
                     new CultureInfo("ru"),
                 };
-
-                //supportedCultures[0].NumberFormat.NumberDecimalSeparator = ".";
-                //supportedCultures[1].NumberFormat.NumberDecimalSeparator = ".";
-                //supportedCultures[2].NumberFormat.NumberDecimalSeparator = ",";
-                //supportedCultures[3].NumberFormat.NumberDecimalSeparator = ",";
-                
-
                 options.DefaultRequestCulture = new RequestCulture("ru-RU");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
@@ -65,8 +69,6 @@ namespace MvcMovie
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<MvcMovieContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
@@ -90,7 +92,7 @@ namespace MvcMovie
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseRequestLocalization();
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
